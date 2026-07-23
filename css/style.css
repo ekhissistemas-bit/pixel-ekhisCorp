@@ -220,15 +220,15 @@ html, body {
   pointer-events: none;
 }
 .full-skyline {
-  height: 17vh;
+  height: 17dvh;
   background-repeat: repeat-x;
   background-position: bottom left;
   background-size: auto 100%;
   image-rendering: auto;
-  bottom: 18vh;
+  bottom: 18dvh;
 }
 .full-ground {
-  height: 20vh;
+  height: 20dvh;
   background-repeat: repeat-x;
   image-rendering: pixelated;
   animation: groundFillScroll 1.4s linear infinite;
@@ -431,7 +431,7 @@ html, body {
 
 .ground {
   position: fixed;
-  bottom: 13vh; left: 0; right: 0;
+  bottom: 13dvh; left: 0; right: 0;
   height: 6px;
   z-index: 2;
   background: repeating-linear-gradient(90deg, #ffffff55 0 30px, transparent 30px 60px);
