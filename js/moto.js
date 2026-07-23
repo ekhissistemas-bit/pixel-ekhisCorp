@@ -493,7 +493,8 @@ const bikeEl = document.getElementById('bike');
 let jumpStartTime = 0;
 const JUMP_DURATION_MS = 550; // debe coincidir con la duracion de la animacion bikeJump en el CSS
 
-mainContentEl.addEventListener('click', () => {
+// pointerdown responde de inmediato (sin el retraso de ~300ms que 'click' puede tener en moviles)
+mainContentEl.addEventListener('pointerdown', () => {
   if (!mainContentEl.classList.contains('playing')) return;
   if (bikeEl.classList.contains('jumping')) return; // evita re-disparar a mitad de salto
   bikeEl.classList.add('jumping');
@@ -1007,7 +1008,7 @@ bikeEl.addEventListener('animationend', (e) => {
   });
 
   // el primer toque sobre mainContent (que ya hace saltar la moto) es el que arranca los obstaculos
-  mainContentEl.addEventListener('click', () => {
+  mainContentEl.addEventListener('pointerdown', () => {
     if (!mainContentEl.classList.contains('playing')) return;
     if (obstaclesStarted) return;
     obstaclesStarted = true;
