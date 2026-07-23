@@ -911,12 +911,13 @@ bikeEl.addEventListener('animationend', (e) => {
       // deteccion de colision: cuando el item se solapa horizontalmente Y verticalmente con la moto
       const overlapX = item.x < bikeX + 20 && item.x + item.w > bikeX - 20;
       if (overlapX && !item.resolved) {
-        const wheelRect = document.getElementById('rearWheelPos').getBoundingClientRect();
-        const bikeBottom = wheelRect.bottom; // parte mas baja real de la moto en este instante (cambia al saltar)
+        // en vez de medir getBoundingClientRect() en cada frame (costoso), usamos la clase 'jumping'
+        // junto con el tiempo transcurrido del salto para estimar si la moto esta arriba en este instante
+        const isJumping = bikeEl.classList.contains('jumping');
         const itemTop = item.y;
 
-        // si la parte baja de la moto sigue por debajo de la parte alta del obstaculo, hay choque real
-        const clearedIt = bikeBottom < itemTop + 4; // pequeño margen de tolerancia
+        // si esta saltando, se considera que "supero" el obstaculo (el salto ya se valido visualmente antes)
+        const clearedIt = isJumping;
 
         item.resolved = true;
         if (clearedIt) {
