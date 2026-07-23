@@ -472,6 +472,9 @@ document.getElementById('openButton').addEventListener('click', (e) => {
       main.classList.add('visible');
       fitToScreen();
 
+      // recien ahora #mainContent es visible, asi que recien ahora se puede medir su layout real
+      if (window.alignBikeToGround) window.alignBikeToGround();
+
       // muestra el mensaje de "toca para iniciar" en vez de arrancar todo de una
       document.getElementById('tapToStart').classList.add('visible');
     }, 400);
@@ -1052,9 +1055,8 @@ window.addEventListener('resize', fitToScreen);
 window.addEventListener('load', fitToScreen);
 fitToScreen();
 
+window.alignBikeToGround = alignBikeToGround; // expuesta para llamarla justo cuando mainContent se hace visible
 window.addEventListener('resize', alignBikeToGround);
-window.addEventListener('load', alignBikeToGround);
-setTimeout(alignBikeToGround, 50); // pequeño delay para asegurar que el layout ya esta calculado
 
 
 
