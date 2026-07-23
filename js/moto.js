@@ -490,11 +490,39 @@ document.getElementById('tapToStart').addEventListener('click', () => {
 // Una vez arrancado, tocar la pantalla hace saltar la moto
 const mainContentEl = document.getElementById('mainContent');
 const bikeEl = document.getElementById('bike');
+let jumpStartTime = 0;
+const JUMP_DURATION_MS = 550; // debe coincidir con la duracion de la animacion bikeJump en el CSS
+
 mainContentEl.addEventListener('click', () => {
   if (!mainContentEl.classList.contains('playing')) return;
   if (bikeEl.classList.contains('jumping')) return; // evita re-disparar a mitad de salto
   bikeEl.classList.add('jumping');
+  jumpStartTime = performance.now();
 });
+
+// Calcula que tan alto (en px) esta la moto en este instante, siguiendo la misma curva que la animacion CSS,
+// sin necesidad de medir el DOM (barato de calcular, se puede llamar en cada frame sin costo)
+function getCurrentJumpHeight() {
+  if (!bikeEl.classList.contains('jumping')) return 0;
+  const elapsed = performance.now() - jumpStartTime;
+  const progress = Math.min(1, elapsed / JUMP_DURATION_MS);
+
+  // puntos clave de la curva bikeJump (porcentaje de tiempo, altura en px), igual que el keyframe CSS
+  const keyframes = [
+    [0, 0], [0.08, 28], [0.16, 48], [0.24, 62], [0.32, 70],
+    [0.40, 70], [0.50, 65], [0.62, 52], [0.74, 34], [0.86, 15], [1, 0]
+  ];
+
+  for (let i = 0; i < keyframes.length - 1; i++) {
+    const [t0, h0] = keyframes[i];
+    const [t1, h1] = keyframes[i + 1];
+    if (progress >= t0 && progress <= t1) {
+      const localT = (progress - t0) / (t1 - t0 || 1);
+      return h0 + (h1 - h0) * localT;
+    }
+  }
+  return 0;
+}
 bikeEl.addEventListener('animationend', (e) => {
   if (e.animationName === 'bikeJump') {
     bikeEl.classList.remove('jumping');
@@ -911,13 +939,10 @@ bikeEl.addEventListener('animationend', (e) => {
       // deteccion de colision: cuando el item se solapa horizontalmente Y verticalmente con la moto
       const overlapX = item.x < bikeX + 20 && item.x + item.w > bikeX - 20;
       if (overlapX && !item.resolved) {
-        // en vez de medir getBoundingClientRect() en cada frame (costoso), usamos la clase 'jumping'
-        // junto con el tiempo transcurrido del salto para estimar si la moto esta arriba en este instante
-        const isJumping = bikeEl.classList.contains('jumping');
-        const itemTop = item.y;
-
-        // si esta saltando, se considera que "supero" el obstaculo (el salto ya se valido visualmente antes)
-        const clearedIt = isJumping;
+        // altura actual del salto calculada matematicamente (sin medir el DOM), comparada con la altura del obstaculo
+        const currentJumpHeight = getCurrentJumpHeight();
+        const requiredHeight = item.type === 'fuelcan' ? 26 : 14; // el bidon, al ser mas alto, exige mas altura de salto
+        const clearedIt = currentJumpHeight >= requiredHeight;
 
         item.resolved = true;
         if (clearedIt) {
