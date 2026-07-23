@@ -1016,6 +1016,26 @@ document.getElementById('starfield').style.backgroundImage = `url(${starfieldTil
 
 
 
+// Alinea la llanta trasera de la moto con la linea real del piso, midiendo posiciones reales en pantalla
+function alignBikeToGround() {
+  const wheelEl = document.getElementById('rearWheelPos');
+  const groundEl = document.getElementById('fullGround');
+  const sceneEl = document.getElementById('scene');
+  if (!wheelEl || !groundEl || !sceneEl) return;
+
+  // reseteo temporal para medir la posicion "natural" sin ajuste previo
+  sceneEl.style.transform = 'none';
+
+  const wheelRect = wheelEl.getBoundingClientRect();
+  const groundRect = groundEl.getBoundingClientRect();
+
+  // contacto real de la llanta (un poco arriba de su base, para que se vea apoyada, no enterrada)
+  const wheelContactY = wheelRect.bottom - 6;
+  const diff = groundRect.top - wheelContactY;
+
+  sceneEl.style.transform = `translateY(${diff}px)`;
+}
+
 // Escala todo el diseño de forma uniforme (sin deformar) para que quepa completo en pantalla
 function fitToScreen() {
   const wrap = document.querySelector('.wrap');
@@ -1031,6 +1051,10 @@ function fitToScreen() {
 window.addEventListener('resize', fitToScreen);
 window.addEventListener('load', fitToScreen);
 fitToScreen();
+
+window.addEventListener('resize', alignBikeToGround);
+window.addEventListener('load', alignBikeToGround);
+setTimeout(alignBikeToGround, 50); // pequeño delay para asegurar que el layout ya esta calculado
 
 
 
