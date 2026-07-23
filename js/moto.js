@@ -1033,7 +1033,7 @@ function alignBikeToGround() {
   const groundRect = groundEl.getBoundingClientRect();
 
   // contacto real de la llanta (un poco arriba de su base, para que se vea apoyada, no enterrada)
-  const wheelContactY = wheelRect.bottom - 7;
+  const wheelContactY = wheelRect.bottom - 5;
   const diff = groundRect.top - wheelContactY;
 
   sceneEl.style.transform = `translateY(${diff}px)`;
