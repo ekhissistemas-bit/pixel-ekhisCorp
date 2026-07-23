@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Motociclista Pixel - Wheelie</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="intro-screen" id="introScreen">
+  <div class="intro-content">
+    <canvas id="introTitleCanvas" class="pixel-title"></canvas>
+    <div class="intro-subtitle">TOCA PARA ABRIR <span class="heart">♥</span></div>
+    <button class="press-start-button" id="openButton" style="background-repeat: repeat;">
+      <span class="press-start-icon">▶</span>
+      <span class="press-start-text">
+        <span class="press-start-title">PRESS START</span>
+        <span class="press-start-sub">PARA COMENZAR</span>
+      </span>
+    </button>
+  </div>
+  <canvas id="openBurstCanvas" class="open-burst"></canvas>
+</div>
+
+<div class="tap-to-start" id="tapToStart">
+  <div class="tap-to-start-panel">
+    <div class="tap-to-start-title">¡PREPÁRATE!</div>
+    <div class="tap-to-start-rules">
+      <div class="rule-row">
+        <canvas id="rulesRockIcon" class="rule-icon"></canvas>
+        <canvas id="rulesFuelCanIcon" class="rule-icon"></canvas>
+        <span class="rule-text">SALTA LAS PIEDRAS Y BIDONES</span>
+      </div>
+      <div class="rule-row">
+        <span class="rule-icon rule-emoji">👆</span>
+        <span class="rule-text">TOCA LA PANTALLA PARA SALTAR</span>
+      </div>
+    </div>
+    <div class="tap-to-start-cta">TOCA PARA INICIAR</div>
+  </div>
+</div>
+
+<div class="tap-to-jump" id="tapToJump">
+  <div class="tap-to-jump-icon">👆</div>
+  <div class="tap-to-jump-ring"></div>
+</div>
+
+<div class="main-content" id="mainContent">
+<div class="starfield" id="starfield"></div>
+<div class="full-skyline" id="fullSkyline"></div>
+<div class="full-ground" id="fullGround"></div>
+<canvas id="obstacleCanvas" class="obstacle-canvas"></canvas>
+<canvas class="game-toast" id="gameToastCanvas"></canvas>
+<canvas id="fireworksCanvas" class="fireworks-canvas"></canvas>
+
+<div class="game-over-screen" id="gameOverScreen">
+  <div class="game-over-message">EN LA VIDA SIEMPRE HABRÁ OBSTÁCULOS<br>LO IMPORTANTE ES <br>NUNCA DEJAR DE INTENTARLO.</div>
+  <button class="press-start-button" id="retryButton">
+    <span class="press-start-icon">↻</span>
+    <span class="press-start-text">
+      <span class="press-start-title">REINTENTAR</span>
+      <span class="press-start-sub">TOCA PARA SEGUIR</span>
+    </span>
+  </button>
+</div>
+
+<div class="wrap">
+  <div class="title-banner">
+    <div class="balloon" data-color="#3fa9f5" style="left:2%; top:10%;"></div>
+    <div class="balloon" data-color="#ff5c7a" style="left:14%; top:60%; animation-delay:-1s;"></div>
+    <div class="balloon" data-color="#ffd23f" style="right:2%; top:10%; animation-delay:-2s;"></div>
+    <canvas id="titleLine1" class="pixel-title"></canvas>
+    <canvas id="titleLine2" class="pixel-title"></canvas>
+    <div class="subtitle">QUE TUS SUEÑOS Y METAS SE CUMPLAN <span class="heart">♥</span></div>
+  </div>
+
+  <div class="jump-count-wrap">
+    <canvas id="jumpCountCanvas" class="jump-count-number"></canvas>
+  </div>
+
+  <div class="achievement-wrap">
+    <div class="achievement-banner">
+      <canvas id="trophyCanvas" class="trophy-icon"></canvas>
+      <div class="achievement-text">
+        <div class="achievement-title">¡LOGRO DESBLOQUEADO!</div>
+        <div class="achievement-sub">+1 AÑO DE MOMENTOS INOLVIDABLES</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scene" id="scene">
+    <div class="shadow"></div>
+    <div class="speedlines">
+      <div></div><div></div><div></div>
+    </div>
+
+    <div id="bike">
+      <div id="bikeGrid" class="pixel-grid"></div>
+      <div id="riderGrid" class="pixel-grid"></div>
+
+      <div class="dust" id="dust"></div>
+      <div id="rearWheelPos">
+        <canvas class="spin" id="rearSpin"></canvas>
+      </div>
+      <div id="rearFenderGrid"></div>
+
+      <div id="frontAssembly">
+        <div class="fork"></div>
+        <div id="frontWheelPos">
+          <canvas class="spin" id="frontSpin"></canvas>
+        </div>
+        <div id="frontFenderGrid"></div>
+      </div>
+    </div>
+  </div>
+  <div class="level-box">
+    <span class="level-label">LEVEL <span class="level-number" id="levelNumber">17</span></span>
+    <div class="bar level-bar"><div class="bar-fill level-fill" id="levelFill"></div></div>
+    <span class="level-percent" id="levelPercent">0%</span>
+  </div>
+
+
+  <div class="caption"> pixel ekhiscorp </div>
+</div>
+</div>
+
+<script src="js/moto.js"></script>
+</body>
+</html>
