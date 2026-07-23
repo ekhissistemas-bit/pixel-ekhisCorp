@@ -525,11 +525,20 @@ html, body {
   transform: rotate(-30deg); /* pose de wheelie fija, más inclinada */
 }
 #bike.jumping {
-  animation: bikeJump 0.5s linear;
+  animation: bikeJump 0.55s linear;
+  will-change: transform;
 }
 @keyframes bikeJump {
-  0%   { transform: translateY(0) rotate(-30deg); animation-timing-function: cubic-bezier(0, 0, 0.15, 1); }
-  18%  { transform: translateY(-70px) rotate(-30deg); animation-timing-function: cubic-bezier(0.9, 0, 1, 0.4); }
+  0%   { transform: translateY(0) rotate(-30deg); }
+  8%   { transform: translateY(-28px) rotate(-30deg); }
+  16%  { transform: translateY(-48px) rotate(-30deg); }
+  24%  { transform: translateY(-62px) rotate(-30deg); }
+  32%  { transform: translateY(-70px) rotate(-30deg); }
+  40%  { transform: translateY(-70px) rotate(-30deg); }
+  50%  { transform: translateY(-65px) rotate(-30deg); }
+  62%  { transform: translateY(-52px) rotate(-30deg); }
+  74%  { transform: translateY(-34px) rotate(-30deg); }
+  86%  { transform: translateY(-15px) rotate(-30deg); }
   100% { transform: translateY(0) rotate(-30deg); }
 }
 
