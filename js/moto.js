@@ -936,26 +936,27 @@ bikeEl.addEventListener('animationend', (e) => {
       const sprite = item.type === 'fuelcan' ? fuelCanSprite : rockSprite;
       ctx.drawImage(sprite, item.x, item.y, item.w, item.h);
 
-      // deteccion de colision: cuando el item se solapa horizontalmente Y verticalmente con la moto
+      // zona de colision: mientras el item se solapa horizontalmente con la moto, se revisa CADA frame
       const overlapX = item.x < bikeX + 20 && item.x + item.w > bikeX - 20;
       if (overlapX && !item.resolved) {
-        // altura actual del salto calculada matematicamente (sin medir el DOM), comparada con la altura del obstaculo
         const currentJumpHeight = getCurrentJumpHeight();
         const requiredHeight = item.type === 'fuelcan' ? 26 : 14; // el bidon, al ser mas alto, exige mas altura de salto
-        const clearedIt = currentJumpHeight >= requiredHeight;
 
-        item.resolved = true;
-        if (clearedIt) {
-          jumpsCompleted++;
-          if (jumpsCompleted === TOTAL_JUMPS_TO_FILL) {
-            morphToastIntoFinalNumber();
-          } else {
-            showToast(String(jumpsCompleted), '#4ade80');
-          }
-          updateLevelBar();
-        } else {
+        if (currentJumpHeight < requiredHeight) {
+          // en cualquier frame donde la moto no este lo bastante alta mientras se solapa, es choque inmediato
+          item.resolved = true;
           triggerGameOver();
         }
+      } else if (!overlapX && item.x + item.w < bikeX - 20 && !item.resolved) {
+        // el item ya paso completamente de largo sin chocar en ningun frame: se cuenta como salto exitoso
+        item.resolved = true;
+        jumpsCompleted++;
+        if (jumpsCompleted === TOTAL_JUMPS_TO_FILL) {
+          morphToastIntoFinalNumber();
+        } else {
+          showToast(String(jumpsCompleted), '#4ade80');
+        }
+        updateLevelBar();
       }
       return true;
     });
