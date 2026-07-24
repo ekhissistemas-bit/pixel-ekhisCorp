@@ -1,3 +1,4 @@
+throw new Error('mantenimiento');
 // Paleta de colores
 const PALETTE = {
   '.': 'transparent',
