@@ -1,4 +1,5 @@
-* { box-sizing: border-box; }
+// Paleta de colores
+const PALETTE = {
 
 .intro-screen {
   position: fixed;
